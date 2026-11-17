@@ -1,0 +1,5 @@
+venomeum-burner-wallet-backup.json
+venomeum-burner-wallet-backup.txt
+*backup*
+*.key
+.env
