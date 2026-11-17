@@ -14,6 +14,10 @@ pragma solidity ^0.8.20;
  * itself are fee-exempt. All thresholds and tax rates are owner-tunable.
  */
 
+interface IBuybackBurner {
+    function forward() external;
+}
+
 interface IUniswapV2Factory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
     function getPair(address tokenA, address tokenB) external view returns (address pair);
@@ -58,6 +62,7 @@ contract Venomeum {
     uint256 public liqAccum;
     uint256 public buybackAccum;
     uint256 public buybackFund; // native token (ETH / USDC on Arc) held for buybacks
+    address public buybackBurner; // sink for buyback purchases (pair.swap forbids the token itself as recipient)
 
     uint256 public liqThreshold = 50_000 * 10 ** 18;
     uint256 public buybackSwapThreshold = 50_000 * 10 ** 18;
@@ -128,6 +133,17 @@ contract Venomeum {
         require(to != address(0), "zero address");
         require(balanceOf[from] >= amount, "balance");
 
+        // Automation runs FIRST, before this transfer moves any balance,
+        // and only ever processes tax accrued by PREVIOUS trades. Firing it
+        // after the balance update would let nested swaps rewrite the pair's
+        // reserves mid-swap and break the outer trade's accounting — the
+        // classic reason production tax tokens trigger at transfer start.
+        if (to == pair && !inSwap && address(router) != address(0)) {
+            if (liqAccum >= liqThreshold) swapAndLiquify();
+            if (buybackAccum >= buybackSwapThreshold) fundBuybackReserve();
+            if (buybackFund >= buybackFireThreshold) _executeBuyback();
+        }
+
         bool isTrade = pair != address(0) && (from == pair || to == pair);
         bool takeFee = tradingTaxEnabled && isTrade && !inSwap
             && !feeExempt[from] && !feeExempt[to];
@@ -158,13 +174,6 @@ contract Venomeum {
                 emit Transfer(from, address(this), toContract);
             }
             emit TaxTaken(from, burnAmt, liqAmt, bbAmt);
-        }
-
-        // Automation runs on sells (tokens flowing into the pair).
-        if (to == pair && !inSwap && address(router) != address(0)) {
-            if (liqAccum >= liqThreshold) swapAndLiquify();
-            if (buybackAccum >= buybackSwapThreshold) fundBuybackReserve();
-            if (buybackFund >= buybackFireThreshold) executeBuyback();
         }
     }
 
@@ -204,10 +213,20 @@ contract Venomeum {
         emit BuybackReserveFunded(amount, received);
     }
 
-    /// @notice Spends buybackFund on VMH from the pool and burns everything bought.
-    function executeBuyback() public onlyOwner lockSwap {
+    /// @notice Owner can fire the buyback manually; sells also fire it
+    /// automatically once buybackFund passes buybackFireThreshold.
+    function executeBuyback() external onlyOwner lockSwap {
         require(buybackFund > 0, "no fund");
-        require(pair != address(0), "no pair");
+        _executeBuyback();
+    }
+
+    /// @dev Internal: spends buybackFund on VMH from the pool and burns
+    /// everything bought. Purchases land in the BuybackBurner sink first
+    /// (pair.swap forbids the token contract as recipient), which forwards
+    /// them here to be burned. Never reverts the caller's trade: if the
+    /// swap fails, the fund is restored for a later attempt.
+    function _executeBuyback() internal {
+        if (buybackFund == 0 || pair == address(0) || buybackBurner == address(0)) return;
         uint256 spend = buybackFund;
         buybackFund = 0;
 
@@ -215,16 +234,20 @@ contract Venomeum {
         path[0] = weth;
         path[1] = address(this);
         uint256 balBefore = balanceOf[address(this)];
-        router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: spend}(
-            0, path, address(this), block.timestamp + 600
-        );
-        uint256 bought = balanceOf[address(this)] - balBefore;
-        if (bought > 0) {
-            balanceOf[address(this)] -= bought;
-            totalSupply -= bought;
-            emit Transfer(address(this), address(0), bought);
+        try router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: spend}(
+            0, path, buybackBurner, block.timestamp + 600
+        ) {
+            IBuybackBurner(buybackBurner).forward();
+            uint256 bought = balanceOf[address(this)] - balBefore;
+            if (bought > 0) {
+                balanceOf[address(this)] -= bought;
+                totalSupply -= bought;
+                emit Transfer(address(this), address(0), bought);
+            }
+            emit BuybackExecuted(spend, bought);
+        } catch {
+            buybackFund = spend; // restore; try again on a later sell
         }
-        emit BuybackExecuted(spend, bought);
     }
 
     function _swapTokensForNative(uint256 amount) internal {
@@ -257,6 +280,7 @@ contract Venomeum {
     }
 
     function setPair(address pair_) external onlyOwner { pair = pair_; }
+    function setBuybackBurner(address burner_) external onlyOwner { buybackBurner = burner_; }
 
     function setTaxes(uint256 burn_, uint256 liq_, uint256 buyback_) external onlyOwner {
         require(burn_ + liq_ + buyback_ <= 1_000, "tax >10%");
