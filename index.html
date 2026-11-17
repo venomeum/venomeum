@@ -159,13 +159,28 @@
 
 <section>
   <div class="wrap">
+    <h2>🏷️ Venomeum Names — our on-chain name service</h2>
+    <p class="sub">ENS-style names for Venomeum, ending in <b>.vmh</b>. Each name is a <b>soul-bound NFT</b> — it can never be transferred or sold, it lives with the wallet that registered it. Live on testnets (2026-11-18):</p>
+    <table>
+      <tr><th>Network</th><th>Names contract</th></tr>
+      <tr><td>Arc Testnet</td><td class="addr">0x5a146cC69101e61f1C6700B5C9E781Eb507600A4</td></tr>
+      <tr><td>Robinhood Chain Testnet</td><td class="addr">0x510354Ae30f707CE37Ed2CD484F332df0066A739</td></tr>
+    </table>
+    <p class="sub">First names registered: <b>venom.vmh</b> and <b>venomeum.vmh</b> — resolution (name → address) and reverse lookup (address → primary name) proven on-chain, and a transfer attempt reverts with SOULBOUND, exactly as designed.</p>
+    <h3>🎯 Sniper tool</h3>
+    <p class="sub">A buy → immediately-sell round-trip tool for Venomeum Swap (<span class="mono">tools/sniper.py</span> in the repo): slippage-protected, dry-run mode, testnet-only guardrails. Demoed live — 0.5 USDC → 400,444 VMH → back on Arc, and 0.0002 ETH → 208,766 VMH → back on Robinhood, round-trip cost under 0.5% each.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2>🗺️ Roadmap — $VMH in build</h2>
     <p class="sub">Plans, honestly labelled. Testnet launches are build progress; mainnet comes later, if ever.</p>
     <ul>
       <li>✅ ERC-20 token with burnable tax, automatic buyback, automatic liquidity pool — $VMH, deployed on Arc + Robinhood testnets</li>
       <li>✅ Own Uniswap V2 pools (Venomeum Swap) with removable liquidity — live on both testnets</li>
-      <li>On-chain sniper tool (buy → immediate sell) + daily transaction activity for the EOA wallet</li>
-      <li>Soul-bound NFTs for name services (ENS / BASE.ETH style)</li>
+      <li>✅ On-chain sniper tool (buy → immediate sell) — built and demoed live on Venomeum Swap</li>
+      <li>✅ Soul-bound NFTs for name services — shipped as Venomeum Names (.vmh) on Arc + Robinhood testnets</li>
       <li>Venomeum Blockchain — the chain itself</li>
     </ul>
   </div>

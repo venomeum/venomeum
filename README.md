@@ -59,6 +59,30 @@ Verified end-to-end with real taxed trades: ~2,500 VMH burned per deployment
 (tax burns + automatic buyback burns), auto-LP minted to the owner, buyback
 fund spent to zero. Full record: [`contracts/deployments.json`](contracts/deployments.json).
 
+## 🏷️ Venomeum Names + 🎯 sniper tool (live on testnets, 2026-11-18)
+
+**Venomeum Names** — our ENS-style on-chain name service. Names end in
+**.vmh**; each name is a **soul-bound NFT** (transfers and approvals revert —
+a name can never be sold or moved, only burned by its owner). Free,
+permissionless registration, ENS-style resolution (`resolve(label)` →
+address) and reverse lookup (`primaryNameOf(address)` → "label.vmh").
+Source: `contracts/VenomeumNames.sol`, record: `contracts/names-deployments.json`.
+
+| Network | Names contract |
+|---|---|
+| Arc Testnet | `0x5a146cC69101e61f1C6700B5C9E781Eb507600A4` |
+| Robinhood Chain Testnet | `0x510354Ae30f707CE37Ed2CD484F332df0066A739` |
+
+First registrations (burner wallet, both chains): **venom.vmh** (#1) and
+**venomeum.vmh** (#2). Soul-bound proof: a `transferFrom` attempt reverts
+with `SOULBOUND` on both chains.
+
+**Sniper tool** — `tools/sniper.py`: buy → immediately-sell round trips on
+Venomeum Swap for on-chain trading activity. Slippage protection, dry-run
+mode, hard testnet-only guardrails (refuses any other chain), 5-native cap.
+Live demo: Arc 0.5 USDC → 400,444 VMH → 0.4982 USDC back (0.37% cost);
+Robinhood 0.0002 ETH → 208,766 VMH → 0.000199 ETH back (0.48% cost).
+
 ## ⚠️ Security — read this first
 
 **The wallet backup files (seed phrase + private keys) are NOT in this repo and
@@ -71,6 +95,6 @@ code, docs, logos, and public addresses.
 
 - ✅ ERC-20 with burnable tax, automatic buyback, automatic liquidity — $VMH, live on Arc + Robinhood testnets
 - ✅ Own Uniswap V2 pools (Venomeum Swap) with removable liquidity
-- On-chain sniper tool + daily transaction activity for the EOA wallet
-- Soul-bound NFTs for name services (ENS / BASE.ETH style)
+- ✅ On-chain sniper tool + daily transaction activity for the EOA wallet — built, demoed live
+- ✅ Soul-bound NFTs for name services (ENS / BASE.ETH style) — shipped as Venomeum Names (.vmh)
 - Venomeum Blockchain — the chain itself
