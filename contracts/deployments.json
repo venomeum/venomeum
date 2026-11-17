@@ -1,0 +1,36 @@
+{
+  "Arc Testnet": {
+    "chain": "Arc Testnet",
+    "chain_id": 5042002,
+    "contract": "0x62C916a8870B291378cfD8EfEcB9513A6211BB1A",
+    "deploy_tx": "0x26be510ceae16a2c9f832f9b9b3dc3878f366911761d7380044878d81a2b3a4f",
+    "deployer": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+    "name": "Venomeum",
+    "symbol": "VMH",
+    "total_supply": 1000000000,
+    "gas_used": 3457965,
+    "explorer_tx": "https://testnet.arcscan.app/tx/0x26be510ceae16a2c9f832f9b9b3dc3878f366911761d7380044878d81a2b3a4f"
+  },
+  "Robinhood Chain Testnet": {
+    "chain": "Robinhood Chain Testnet",
+    "chain_id": 46630,
+    "contract": "0x62C916a8870B291378cfD8EfEcB9513A6211BB1A",
+    "deploy_tx": "0xfc5edc29de2e1704c2fb2fbd7308301425cbf3fc4cd65b07ae562e96863aa218",
+    "deployer": "0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1",
+    "name": "Venomeum",
+    "symbol": "VMH",
+    "total_supply": 1000000000,
+    "gas_used": 3457965,
+    "explorer_tx": "https://explorer.testnet.chain.robinhood.com/tx/0xfc5edc29de2e1704c2fb2fbd7308301425cbf3fc4cd65b07ae562e96863aa218"
+  },
+  "Arc Testnet (Circle agent wallet)": {
+    "chain": "Arc Testnet",
+    "chain_id": 5042002,
+    "contract": "0x1Fb4cDc18a1dc375e025202Cd45daA581b0bEd4b",
+    "deployer": "0xea68c5f665b86d4f8fba2faad2c8b5af5aed9087",
+    "name": "Venomeum",
+    "symbol": "VMH",
+    "total_supply": 1000000000,
+    "via": "Circle agent wallet (SCA deploy)"
+  }
+}
