@@ -79,6 +79,28 @@
 
 <section>
   <div class="wrap">
+    <h2>🪙 $VMH — the token</h2>
+    <p class="sub">Venomeum (VMH) is live on testnets. ERC-20, 1,000,000,000 supply, 18 decimals.
+    Tax applies only to DEX trades (never wallet-to-wallet): <strong>1% burned</strong>,
+    <strong>1% automatic liquidity</strong>, <strong>1% automatic buyback</strong> — the buyback slice
+    auto-swaps to the chain's native token, buys VMH back from the pool, and burns it.</p>
+    <img src="assets/logo-mark.jpg" alt="VMH token logo — the Venomeum snake-victory mark" style="width:140px;border:1px solid var(--line);border-radius:14px;display:block;margin-bottom:18px">
+    <table>
+      <tr><th style="width:230px">Deployment</th><th>Contract</th><th style="width:86px"></th></tr>
+      <tr><td>Arc Testnet — burner wallet</td><td class="addr">0x62C916a8870B291378cfD8EfEcB9513A6211BB1A</td><td><button class="copy" data-copy="0x62C916a8870B291378cfD8EfEcB9513A6211BB1A">Copy</button></td></tr>
+      <tr><td>Arc Testnet — Circle agent wallet</td><td class="addr">0x1fb4cdc18a1dc375e025202cd45daa581b0bed4b</td><td><button class="copy" data-copy="0x1fb4cdc18a1dc375e025202cd45daa581b0bed4b">Copy</button></td></tr>
+      <tr><td>Robinhood Chain Testnet — burner wallet</td><td class="addr">0x62C916a8870B291378cfD8EfEcB9513A6211BB1A</td><td><button class="copy" data-copy="0x62C916a8870B291378cfD8EfEcB9513A6211BB1A">Copy</button></td></tr>
+    </table>
+    <p style="margin-top:14px" class="note">Contract source: <a href="contracts/VMH.sol">contracts/VMH.sol</a> ·
+    deployment record: <a href="contracts/deployments.json">contracts/deployments.json</a> ·
+    token metadata: <a href="tokens/vmh.json">tokens/vmh.json</a>.
+    Liquidity pairs get wired as soon as a DEX is live on these testnets — the tax, auto-LP and buyback
+    machinery activates with the pair.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2>🔥 Burner wallet — public addresses</h2>
     <p class="sub">One BIP39 mnemonic, eight chains, verified 27/27 checks (keys re-derive to addresses,
     sign/verify on every chain). <strong>Burner only:</strong> testnets, faucets, small amounts — never significant funds.</p>
@@ -131,12 +153,12 @@
 <section>
   <div class="wrap">
     <h2>🗺️ Roadmap — $VMH in build</h2>
-    <p class="sub">Plans, honestly labelled. Nothing here is launched yet.</p>
+    <p class="sub">Plans, honestly labelled. Testnet launches are build progress; mainnet comes later, if ever.</p>
     <ul>
+      <li>✅ ERC-20 token with burnable tax, automatic buyback, automatic liquidity pool — $VMH, deployed on Arc + Robinhood testnets</li>
       <li>On-chain sniper tool (buy → immediate sell) + daily transaction activity for the EOA wallet</li>
       <li>Soul-bound NFTs for name services (ENS / BASE.ETH style)</li>
-      <li>ERC-20 tokens with burnable tax, automatic buyback, automatic liquidity pool</li>
-      <li>Venomeum Blockchain — $VMH</li>
+      <li>Venomeum Blockchain — the chain itself</li>
     </ul>
   </div>
 </section>
