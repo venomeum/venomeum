@@ -118,3 +118,5 @@ code, docs, logos, and public addresses.
 - ✅ Soul-bound NFTs for name services (ENS / BASE.ETH style) — shipped as Venomeum Names (.vmh)
 - ✅ Agent-controlled Web3 browser (EVM + Solana, Phantom) for dapp tasks — built and verified
 - Venomeum Blockchain — the chain itself
+
+Learning GitHub one small pull request at a time. ✌️
