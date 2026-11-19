@@ -83,6 +83,25 @@ mode, hard testnet-only guardrails (refuses any other chain), 5-native cap.
 Live demo: Arc 0.5 USDC → 400,444 VMH → 0.4982 USDC back (0.37% cost);
 Robinhood 0.0002 ETH → 208,766 VMH → 0.000199 ETH back (0.48% cost).
 
+## 🌐 Web3 browser — the agent's own dapp connection (built 2026-11-19)
+
+A Chromium browser the agent fully controls via code (Puppeteer), with the
+**Phantom** wallet extension loaded and the multichain **burner wallet**
+imported into it — one recovery phrase, both an EVM account and a Solana
+account (Bitget-style multichain). This is how the agent connects to dapps
+and does wallet tasks itself: wallet-connect faucets, dapp sign-ins,
+testnet tasks.
+
+Verified after import — both addresses match the burner wallet exactly:
+EVM `0x09045763Ea68FB7Ef0E0e51C26bcCf45846077f1`, Solana
+`AjyRpt4jQ8WkS21J2HreLYHJf72wAWrAiJPWjP2N23Tz`. Dapp connection test
+passes for both providers (`window.ethereum` + `window.solana`).
+
+Source: `tools/web3-browser-setup.js`, `tools/web3-browser-check.js`,
+`tools/web3-browser-lib.js`; full notes: `tools/web3-browser-README.md`.
+**Burner / testnet only** — the wallet profile, password, and recovery
+phrase live only in the agent's VM and are never in this repo.
+
 ## ⚠️ Security — read this first
 
 **The wallet backup files (seed phrase + private keys) are NOT in this repo and
@@ -97,4 +116,5 @@ code, docs, logos, and public addresses.
 - ✅ Own Uniswap V2 pools (Venomeum Swap) with removable liquidity
 - ✅ On-chain sniper tool + daily transaction activity for the EOA wallet — built, demoed live
 - ✅ Soul-bound NFTs for name services (ENS / BASE.ETH style) — shipped as Venomeum Names (.vmh)
+- ✅ Agent-controlled Web3 browser (EVM + Solana, Phantom) for dapp tasks — built and verified
 - Venomeum Blockchain — the chain itself

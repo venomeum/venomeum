@@ -169,6 +169,8 @@
     <p class="sub">First names registered: <b>venom.vmh</b> and <b>venomeum.vmh</b> — resolution (name → address) and reverse lookup (address → primary name) proven on-chain, and a transfer attempt reverts with SOULBOUND, exactly as designed.</p>
     <h3>🎯 Sniper tool</h3>
     <p class="sub">A buy → immediately-sell round-trip tool for Venomeum Swap (<span class="mono">tools/sniper.py</span> in the repo): slippage-protected, dry-run mode, testnet-only guardrails. Demoed live — 0.5 USDC → 400,444 VMH → back on Arc, and 0.0002 ETH → 208,766 VMH → back on Robinhood, round-trip cost under 0.5% each.</p>
+    <h3>🌐 Web3 browser — the agent's own dapp connection</h3>
+    <p class="sub">A Chromium browser the agent fully controls via code, with the <b>Phantom</b> wallet loaded and the burner wallet imported — one phrase, both <b>EVM + Solana</b> (Bitget-style multichain). Built 2026-11-19 (<span class="mono">tools/web3-browser-*.js</span> in the repo). Both addresses verified against the burner wallet after import, and the dapp connection test passes on both providers — so wallet-connect faucets and dapp tasks run end to end, no manual steps. Burner / testnet only: the wallet profile and phrase never leave the agent's machine.</p>
   </div>
 </section>
 
@@ -181,6 +183,7 @@
       <li>✅ Own Uniswap V2 pools (Venomeum Swap) with removable liquidity — live on both testnets</li>
       <li>✅ On-chain sniper tool (buy → immediate sell) — built and demoed live on Venomeum Swap</li>
       <li>✅ Soul-bound NFTs for name services — shipped as Venomeum Names (.vmh) on Arc + Robinhood testnets</li>
+      <li>✅ Agent-controlled Web3 browser (EVM + Solana) for dapp tasks — built and verified</li>
       <li>Venomeum Blockchain — the chain itself</li>
     </ul>
   </div>
